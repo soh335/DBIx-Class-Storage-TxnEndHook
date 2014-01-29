@@ -44,6 +44,7 @@
       "runtime" : {
          "requires" : {
             "DBIx::Class" : "0",
+            "Try::Tiny" : "0",
             "perl" : "5.008005"
          }
       },
