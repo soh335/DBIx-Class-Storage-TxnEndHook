@@ -97,7 +97,7 @@ L<DBIx::Class::Storage::TxnEndHook>. In L<DBIx::TransactionManager::EndHook>, wh
 subroutine, other subroutines are canceld and I<died>.
 
 Why ? It's caused by L<DBIx::Class::Storage::TxnScopeGuard>. Guard object marked inactivated
-after C<< $self->{storage}->txn_commit >> in L<DBIx::Class::Storage::TxnScopeGuard::commit>.
+after C<< $self->{storage}->txn_commit >> in C<DBIx::Class::Storage::TxnScopeGuard::commit>.
 So if died in here, can't mark guard as inactivated.
 
 =back
