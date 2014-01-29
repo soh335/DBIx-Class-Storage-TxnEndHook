@@ -26,7 +26,7 @@ This module is porting from [DBIx::TransactionManager::EndHook](http://search.cp
 
 - $schema->storage->add\_txn\_end\_hook(sub{ ... })
 
-    Add transaction hook. You can add multiple subroutine and transaction is not started, can call
+    Add transaction hook. You can add multiple subroutine and transaction is not started, cant call
     this method. These subroutines are executed after all transactions are commited. If any
     transaction is failed, these subroutines are cleard.
 
