@@ -57,6 +57,17 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/soh335/DBIx-Class-Storage-TxnEndHook/issues"
+      },
+      "homepage" : "https://github.com/soh335/DBIx-Class-Storage-TxnEndHook",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/soh335/DBIx-Class-Storage-TxnEndHook.git",
+         "web" : "https://github.com/soh335/DBIx-Class-Storage-TxnEndHook"
+      }
+   },
    "version" : "0.01",
    "x_contributors" : [
       "soh335 <sugarbabe335@gmail.com>"

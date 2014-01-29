@@ -35,13 +35,15 @@ This module is porting from [DBIx::TransactionManager::EndHook](http://search.cp
     subroutine, other subroutines are canceld and _died_.
 
     Why ? It's caused by [DBIx::Class::Storage::TxnScopeGuard](http://search.cpan.org/perldoc?DBIx::Class::Storage::TxnScopeGuard). Guard object marked inactivated
-    after `$self->{storage}->txn_commit` in `DBIx::Class::Storage::TxnScopeGuard::commit`.
+    after `$self->{storage}->txn_commit` in [DBIx::Class::Storage::TxnScopeGuard::commit](http://search.cpan.org/perldoc?DBIx::Class::Storage::TxnScopeGuard::commit).
     So if died in here, can't mark guard as inactivated.
 
 # SEE ALSO
 
 [DBIx::Class](http://search.cpan.org/perldoc?DBIx::Class)
+
 [DBIx::Class::Storage](http://search.cpan.org/perldoc?DBIx::Class::Storage)
+
 [DBIx::TransactionManager::EndHook](http://search.cpan.org/perldoc?DBIx::TransactionManager::EndHook)
 
 # LICENSE
