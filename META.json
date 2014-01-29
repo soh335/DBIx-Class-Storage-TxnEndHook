@@ -43,11 +43,15 @@
       },
       "runtime" : {
          "requires" : {
+            "DBIx::Class" : "0",
             "perl" : "5.008005"
          }
       },
       "test" : {
          "requires" : {
+            "DBD::SQLite" : "0",
+            "DBI" : "0",
+            "Test::Fatal" : "0",
             "Test::More" : "0.98"
          }
       }
