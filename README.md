@@ -1,6 +1,6 @@
 # NAME
 
-DBIx::Class::Storage::TxnEndHook - It's new $module
+DBIx::Class::Storage::TxnEndHook - transaction hook provider for DBIx::Class
 
 # SYNOPSIS
 
@@ -13,13 +13,36 @@ DBIx::Class::Storage::TxnEndHook - It's new $module
     package main
 
     my $schema = MyApp::Schema->connect(...)
-    $schema->txn_begin;
-    $schema->add_txn_end_hook(sub { ... });
-    $schema->txn_commit;
+    $schema->storage->txn_begin;
+    $schema->storage->add_txn_end_hook(sub { ... });
+    $schema->storage->txn_commit;
 
 # DESCRIPTION
 
-DBIx::Class::Storage::TxnEndHook is ...
+DBIx::Class::Storage::TxnEndHook is transaction hook provider for DBIx::Class.
+This module is porting from [DBIx::TransactionManager::EndHook](http://search.cpan.org/perldoc?DBIx::TransactionManager::EndHook).
+
+# METHODS
+
+- $schema->storage->add\_txn\_end\_hook(sub{ ... })
+
+    Add transaction hook. You can add multiple subroutine and transaction is not started, can call
+    this method. These subroutines are executed after all transactions are commited. If any
+    transaction is failed, these subroutines are cleard.
+
+    If died in subroutine, _warn_ deid message and clear remain all subroutines. It is different from
+    [DBIx::Class::Storage::TxnEndHook](http://search.cpan.org/perldoc?DBIx::Class::Storage::TxnEndHook). In [DBIx::TransactionManager::EndHook](http://search.cpan.org/perldoc?DBIx::TransactionManager::EndHook), when died in
+    subroutine, other subroutines are canceld and _died_.
+
+    Why ? It's caused by [DBIx::Class::Storage::TxnScopeGuard](http://search.cpan.org/perldoc?DBIx::Class::Storage::TxnScopeGuard). Guard object marked inactivated
+    after `$self->{storage}->txn_commit` in `DBIx::Class::Storage::TxnScopeGuard::commit`.
+    So if died in here, can't mark guard as inactivated.
+
+# SEE ALSO
+
+[DBIx::Class](http://search.cpan.org/perldoc?DBIx::Class)
+[DBIx::Class::Storage](http://search.cpan.org/perldoc?DBIx::Class::Storage)
+[DBIx::TransactionManager::EndHook](http://search.cpan.org/perldoc?DBIx::TransactionManager::EndHook)
 
 # LICENSE
 
