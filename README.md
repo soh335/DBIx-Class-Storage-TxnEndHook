@@ -4,7 +4,18 @@ DBIx::Class::Storage::TxnEndHook - It's new $module
 
 # SYNOPSIS
 
-    use DBIx::Class::Storage::TxnEndHook;
+    package MyApp::Schema;
+    use parent 'DBIx::Schema';
+    __PACKAGE__->ensure_class_loaded('DBIx::Class::Storage::TxnEndHook');
+    __PACKAGE__->ensure_class_loaded('DBIx::Class::Storage::DBI');
+    __PACKAGE__->inject_base('DBIx::Class::Storage::DBI', 'DBIx::Class::Storage::TxnEndHook');
+
+    package main
+
+    my $schema = MyApp::Schema->connect(...)
+    $schema->txn_begin;
+    $schema->add_txn_end_hook(sub { ... });
+    $schema->txn_commit;
 
 # DESCRIPTION
 
