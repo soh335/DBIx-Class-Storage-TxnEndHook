@@ -23,7 +23,13 @@ sub add_txn_end_hook {
         $self->throw_exception('only can call add_txn_end_hook in transaction');
     }
 
-    push @{ $self->_hooks }, $hook;
+    push @{ $self->_hooks->[-1] }, $hook;
+}
+
+sub txn_begin {
+    my $self = shift;
+    push @{ $self->_hooks }, [];
+    return $self->next::method(@_);
 }
 
 sub txn_commit {
@@ -33,8 +39,10 @@ sub txn_commit {
 
     if ( $is_last_txn && @{ $self->_hooks } ) {
         try {
-            while ( my $hook = shift @{ $self->_hooks } ) {
-                $hook->();
+            while ( my $hooks = shift @{ $self->_hooks } ) {
+                while ( my $hook = shift @$hooks ) {
+                    $hook->();
+                }
             }
         }
         catch {
@@ -48,9 +56,15 @@ sub txn_commit {
 
 sub txn_rollback {
     my $self = shift;
-    my @ret = $self->next::method(@_);
-    $self->_hooks([]);
-    @ret;
+    if ($self->transaction_depth == 1) {
+        $self->_hooks([]);
+    }
+    elsif($self->transaction_depth > 1) {
+        if ( $self->auto_savepoint ) {
+            pop @{ $self->_hooks };
+        }
+    }
+    return $self->next::method(@_);
 }
 
 1;

@@ -32,7 +32,8 @@ subtest 'DBIx::Schema->txn_do style' => sub {
                     $call_count++;
                 });
             is $call_count, 0, "not yet call";
-            is @{ $schema->storage->_hooks }, 1, "hooks count is 1";
+            is @{ $schema->storage->_hooks }, 1;
+            is @{ $schema->storage->_hooks->[0] }, 1, "hooks count is 1";
         });
 
     is $call_count, 1, "add_txn_end_hook is called";
@@ -48,7 +49,8 @@ subtest 'DBIx::Schema->txn_begin and txn_commit style' => sub {
         $call_count++;
     });
     is $call_count, 0, "not yet call";
-    is @{ $schema->storage->_hooks }, 1, "hooks count is 1";
+    is @{ $schema->storage->_hooks }, 1;
+    is @{ $schema->storage->_hooks->[0] }, 1, "hooks count is 1";
 
     $schema->txn_commit;
 
@@ -68,7 +70,8 @@ subtest 'DBIx::Schema->storage->txn_begin and txn_commit style' => sub {
         $call_count++;
     });
     is $call_count, 0;
-    is @{ $schema->storage->_hooks }, 2;
+    is @{ $schema->storage->_hooks }, 1;
+    is @{ $schema->storage->_hooks->[0] }, 2;
     $schema->storage->txn_commit;
 
     is $call_count, 2;
@@ -87,7 +90,8 @@ subtest 'DBIx::Schema->txn_scope_guard style' => sub {
         $call_count++;
     });
     is $call_count, 0;
-    is @{ $schema->storage->_hooks }, 2;
+    is @{ $schema->storage->_hooks }, 1;
+    is @{ $schema->storage->_hooks->[0] }, 2;
 
     $guard->commit;
 
@@ -111,7 +115,8 @@ subtest 'die in end hook subroutine' => sub {
         $call_count++;
     });
     is $call_count, 0;
-    is @{ $schema->storage->_hooks }, 3;
+    is @{ $schema->storage->_hooks }, 1;
+    is @{ $schema->storage->_hooks->[0] }, 3;
 
     is(
         exception {
@@ -144,7 +149,9 @@ subtest 'nest transaction' => sub {
     $guard2->commit;
 
     is $call_count, 0;
-    is @{ $schema->storage->_hooks }, 2, "not yet called";
+    is @{ $schema->storage->_hooks }, 2;
+    is @{ $schema->storage->_hooks->[0] }, 0;
+    is @{ $schema->storage->_hooks->[1] }, 2, "not yet called";
 
     $guard1->commit;
 
@@ -164,7 +171,8 @@ subtest 'schema->add_txn_end_hook' => sub {
         $call_count++;
     });
     is $call_count, 0;
-    is @{ $schema->storage->_hooks }, 2;
+    is @{ $schema->storage->_hooks }, 1;
+    is @{ $schema->storage->_hooks->[0] }, 2;
     $schema->txn_commit;
 
     is $call_count, 2;
@@ -180,7 +188,8 @@ subtest 'clear hook on rollback' => sub {
         $schema->storage->add_txn_end_hook(sub {
             $call_count++;
         });
-        is @{ $schema->storage->_hooks }, 1, "not yet called";
+        is @{ $schema->storage->_hooks }, 1;
+        is @{ $schema->storage->_hooks->[0] }, 1, "not yet called";
         # end of scope
     }
 
