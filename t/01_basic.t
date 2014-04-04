@@ -152,6 +152,28 @@ subtest 'nest transaction' => sub {
     is @{ $schema->storage->_hooks }, 0;
 };
 
+subtest 'fail in nested transaction' => sub {
+    my $schema = gen_schema();
+    my $call_count = 0;
+
+    my $guard1 = $schema->txn_scope_guard;
+
+    $schema->storage->add_txn_end_hook(sub {
+        $call_count++;
+    });
+
+    {
+        my $guard2 = $schema->txn_scope_guard;
+        $schema->storage->add_txn_end_hook(sub {
+            $call_count++;
+        });
+        undef $guard2;
+    }
+
+    $guard1->commit;
+    is $call_count, 0;
+};
+
 subtest 'schema->add_txn_end_hook' => sub {
     my $schema = gen_schema();
     my $call_count = 0;

@@ -48,8 +48,8 @@ sub txn_commit {
 
 sub txn_rollback {
     my $self = shift;
-    my @ret = $self->next::method(@_);
     $self->_hooks([]);
+    my @ret = $self->next::method(@_);
     @ret;
 }
 
