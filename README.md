@@ -20,7 +20,7 @@ DBIx::Class::Storage::TxnEndHook - transaction hook provider for DBIx::Class
 # DESCRIPTION
 
 DBIx::Class::Storage::TxnEndHook is transaction hook provider for DBIx::Class.
-This module is porting from [DBIx::TransactionManager::EndHook](http://search.cpan.org/perldoc?DBIx::TransactionManager::EndHook).
+This module is porting from [DBIx::TransactionManager::EndHook](https://metacpan.org/pod/DBIx::TransactionManager::EndHook).
 
 # METHODS
 
@@ -31,20 +31,20 @@ This module is porting from [DBIx::TransactionManager::EndHook](http://search.cp
     transaction is failed, these subroutines are cleard.
 
     If died in subroutine, _warn_ deid message and clear remain all subroutines. It is different from
-    [DBIx::Class::Storage::TxnEndHook](http://search.cpan.org/perldoc?DBIx::Class::Storage::TxnEndHook). In [DBIx::TransactionManager::EndHook](http://search.cpan.org/perldoc?DBIx::TransactionManager::EndHook), when died in
+    [DBIx::Class::Storage::TxnEndHook](https://metacpan.org/pod/DBIx::Class::Storage::TxnEndHook). In [DBIx::TransactionManager::EndHook](https://metacpan.org/pod/DBIx::TransactionManager::EndHook), when died in
     subroutine, other subroutines are canceld and _died_.
 
-    Why ? It's caused by [DBIx::Class::Storage::TxnScopeGuard](http://search.cpan.org/perldoc?DBIx::Class::Storage::TxnScopeGuard). Guard object marked inactivated
+    Why ? It's caused by [DBIx::Class::Storage::TxnScopeGuard](https://metacpan.org/pod/DBIx::Class::Storage::TxnScopeGuard). Guard object marked inactivated
     after `$self->{storage}->txn_commit` in `DBIx::Class::Storage::TxnScopeGuard::commit`.
     So if died in here, can't mark guard as inactivated.
 
 # SEE ALSO
 
-[DBIx::Class](http://search.cpan.org/perldoc?DBIx::Class)
+[DBIx::Class](https://metacpan.org/pod/DBIx::Class)
 
-[DBIx::Class::Storage](http://search.cpan.org/perldoc?DBIx::Class::Storage)
+[DBIx::Class::Storage](https://metacpan.org/pod/DBIx::Class::Storage)
 
-[DBIx::TransactionManager::EndHook](http://search.cpan.org/perldoc?DBIx::TransactionManager::EndHook)
+[DBIx::TransactionManager::EndHook](https://metacpan.org/pod/DBIx::TransactionManager::EndHook)
 
 # LICENSE
 
