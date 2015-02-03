@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/soh335/DBIx-Class-Storage-TxnEndHook.svg?branch=master)](https://travis-ci.org/soh335/DBIx-Class-Storage-TxnEndHook)
 # NAME
 
 DBIx::Class::Storage::TxnEndHook - transaction hook provider for DBIx::Class
