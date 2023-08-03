@@ -39,7 +39,7 @@ sub txn_commit {
         }
         catch {
             $self->_hooks([]);
-            warn $_;
+            warn "[TxnEndHook]" . $_;
         };
     }
 
