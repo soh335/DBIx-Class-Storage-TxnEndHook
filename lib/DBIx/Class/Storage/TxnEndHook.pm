@@ -10,6 +10,8 @@ __PACKAGE__->mk_group_accessors(simple => qw/_hooks/);
 
 our $VERSION = "0.01";
 
+our $WARN_PREFIX = "";
+
 sub new {
     my $self = shift->next::method(@_);
     $self->_hooks([]);
@@ -39,7 +41,7 @@ sub txn_commit {
         }
         catch {
             $self->_hooks([]);
-            warn "[TxnEndHook]" . $_;
+            warn $WARN_PREFIX . $_;
         };
     }
 
@@ -51,6 +53,11 @@ sub txn_rollback {
     my @ret = $self->next::method(@_);
     $self->_hooks([]);
     @ret;
+}
+
+sub warn_prefix {
+    my $class = shift;
+    $WARN_PREFIX = shift;
 }
 
 1;
