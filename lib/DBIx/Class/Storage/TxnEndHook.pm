@@ -8,7 +8,7 @@ use base 'DBIx::Class::Storage';
 
 __PACKAGE__->mk_group_accessors(simple => qw/_hooks/);
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 our $WARN_PREFIX = "";
 
